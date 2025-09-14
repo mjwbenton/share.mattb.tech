@@ -3,7 +3,7 @@ import { useActivityPage } from "./activityPageDataProvider";
 import { TopRightSpinner } from "component/Spinner";
 import Tile, { Wall } from "component/Tile";
 import Expander from "component/Expander";
-import { PiBarbell } from "react-icons/pi";
+import { RiRunLine } from "react-icons/ri";
 import Icon from "component/Icon";
 import formatPercentageChange from "utils/formatPercentageChange";
 import StripedList, { StripeElement } from "component/StripedList";
@@ -30,7 +30,7 @@ export default function RunningSection() {
       <div className="space-y-12">
         <Wall>
           <Tile>
-            <Icon component={PiBarbell} />
+            <Icon component={RiRunLine} />
             <strong>{trailing30.count}</strong> runs lasting{" "}
             <strong>{formatDuration(trailing30.duration)}</strong> in the last
             30 days
@@ -41,7 +41,7 @@ export default function RunningSection() {
             </span>
           </Tile>
           <Tile>
-            <Icon component={PiBarbell} />
+            <Icon component={RiRunLine} />
             <strong>{formatKm(trailing30.distance)}</strong> run in the last 30
             days
             <br />
@@ -60,7 +60,7 @@ export default function RunningSection() {
                     {formatStartTime(workout.startTime)}
                   </div>
                   <div>
-                    <Icon component={PiBarbell} />{" "}
+                    <Icon component={RiRunLine} />{" "}
                     {formatDuration(workout.durationSeconds)} -{" "}
                     {formatKm(workout.distance?.km ?? 0)}
                   </div>
