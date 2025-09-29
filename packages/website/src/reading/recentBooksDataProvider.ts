@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 import { DataProvider } from "@mattb.tech/data-fetching";
 import { RecentBooksQuery } from "generated/graphql";
 import { useQuery } from "@apollo/client";
+import { fragment } from "./Book";
 
 const QUERY = gql`
   query RecentBooks($after: ID) {
@@ -15,32 +16,12 @@ const QUERY = gql`
     }
   }
 
-  fragment Book on Book {
-    id
-    title
-    image {
-      url
-      width
-      height
-    }
-    author
-    shelf {
-      id
-      name
-    }
-    addedAt
-    movedAt
-    notes
-    rating
-    highlights(first: 0) {
-      total
-    }
-  }
+  ${fragment}
 `;
 
 const recentBooksDataProvider: DataProvider<never, RecentBooksQuery> = async (
   _: never,
-  { client },
+  { client }
 ) => {
   const result = await client.query<RecentBooksQuery>({
     query: QUERY,

@@ -5,8 +5,33 @@ import TwoRowText from "../component/TwoRowText";
 import Date from "../component/Date";
 import { Star, Clock } from "react-feather";
 import { BookFragment } from "../generated/graphql";
+import gql from "graphql-tag";
 
 const READ_SHELF_ID = "Read";
+
+export const fragment = gql`
+  fragment Book on Book {
+    id
+    title
+    image {
+      url
+      width
+      height
+    }
+    author
+    shelf {
+      id
+      name
+    }
+    addedAt
+    movedAt
+    notes
+    rating
+    highlights(first: 0) {
+      total
+    }
+  }
+`;
 
 const Book: React.FunctionComponent<{ book: BookFragment }> = ({ book }) => (
   <ContentBlock>
