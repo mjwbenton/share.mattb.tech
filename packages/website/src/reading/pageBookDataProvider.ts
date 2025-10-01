@@ -15,7 +15,7 @@ const QUERY = gql`
 
 const pageBookDataProvider: DataProvider<never, PageBookQuery> = async (
   { bookId }: { bookId: string },
-  { client }
+  { client },
 ) => {
   const result = await client.query<PageBookQuery>({
     query: QUERY,
