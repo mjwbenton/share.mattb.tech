@@ -9,7 +9,7 @@ export interface DataProvider<PageMeta = unknown, Result = any> {
   ): Promise<Result>;
 }
 
-export default async function runtime(
+export async function dataProviderRuntime(
   pageMeta: unknown,
   dataProviders: Array<DataProvider>,
 ) {
@@ -24,5 +24,26 @@ export default async function runtime(
       apolloCache: context.client.extract(),
       pageMeta,
     },
+  };
+}
+
+export interface PathsProvider<PageMeta = unknown> {
+  (
+    pageMeta: PageMeta,
+    context: { client: ApolloClient<NormalizedCacheObject> },
+  ): Promise<Array<Record<string, string>>>;
+}
+
+export async function pathsProviderRuntime(
+  pageMeta: unknown,
+  pathsProvider: PathsProvider,
+) {
+  const context = { client: getClient() };
+  const paths = await pathsProvider(pageMeta, context);
+  return {
+    paths: paths.map((params) => ({
+      params,
+    })),
+    fallback: false,
   };
 }
