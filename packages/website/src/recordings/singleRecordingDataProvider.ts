@@ -13,7 +13,7 @@ const QUERY = gql`
 
 const singleRecordingDataProvider: DataProvider<
   { params: { recording: string } },
-  { recording: { name: string; url: string } | undefined }
+  { recording: { name: string; url: string } | null }
 > = async ({ params: { recording } }, { client }) => {
   const result = await client.query<RecordingsSingleQuery>({
     query: QUERY,
