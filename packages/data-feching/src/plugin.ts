@@ -50,8 +50,8 @@ const plugin: Plugin<
       );
     });
 
-    const getStaticPropsExport = `export const getStaticProps = async () => {
-        const pageMeta = ${JSON.stringify(pageMeta)};
+    const getStaticPropsExport = `export const getStaticProps = async ({params}) => {
+        const pageMeta = {...${JSON.stringify(pageMeta)}, params: params ?? {} };
         return await dataProviderRuntime(pageMeta, [${dataProviders
           .map((_, i) => `_dp${i}`)
           .join(", ")}])
