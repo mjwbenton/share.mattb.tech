@@ -14,7 +14,7 @@ const Infoline = ({
   shareUrl?: string;
   children: any;
 }) => (
-  <div className="flex text-xs bg-light-1 dark:bg-dark-1 max-w-[100vw]">
+  <div className="flex text-xs bg-light-1 dark:bg-dark-1 max-w-[inherit]">
     <div className="p-2 flex-1 min-w-0">{children}</div>
     {shareUrl ? (
       <NoShareMode>

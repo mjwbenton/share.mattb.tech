@@ -32,7 +32,7 @@ const Photo: React.FunctionComponent<
     />
   );
   return (
-    <div data-testid="photo-content-block" tabIndex={0}>
+    <div data-testid="photo-content-block" className="max-w-full" tabIndex={0}>
       {lazyLoad ? (
         <LazyLoad once offset={200} placeholder={<div className="h-64" />}>
           {img}
