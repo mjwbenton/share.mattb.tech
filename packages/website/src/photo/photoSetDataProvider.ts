@@ -5,7 +5,7 @@ import { DataProvider } from "@mattb.tech/data-fetching";
 
 export const QUERY = gql`
   query PhotoSet($photosetId: ID!) {
-    page: photoSet(photosetId: $photosetId, first: 100) {
+    page: photoSet(photosetId: $photosetId, first: 150) {
       hasNextPage
       nextPageCursor
       items {
