@@ -3,18 +3,7 @@ import { DataProvider } from "@mattb.tech/data-fetching";
 import { RecentGamesQuery } from "generated/graphql";
 import { useQuery } from "@apollo/client";
 
-const QUERY = gql`
-  query RecentGames($after: ID) {
-    recentGames: videoGames(first: 15, after: $after) {
-      total
-      hasNextPage
-      nextPageCursor
-      items {
-        ...VideoGame
-      }
-    }
-  }
-
+export const videoGameFragment = gql`
   fragment VideoGame on VideoGame {
     id
     title
@@ -35,6 +24,21 @@ const QUERY = gql`
     notes
     rating
   }
+`;
+
+const QUERY = gql`
+  query RecentGames($after: ID) {
+    recentGames: videoGames(first: 15, after: $after) {
+      total
+      hasNextPage
+      nextPageCursor
+      items {
+        ...VideoGame
+      }
+    }
+  }
+
+  ${videoGameFragment}
 `;
 
 const recentGamesDataProvider: DataProvider<never, RecentGamesQuery> = async (

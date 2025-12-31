@@ -4,7 +4,11 @@ import Infoline from "../component/Infoline";
 import TwoRowText from "../component/TwoRowText";
 import Date from "../component/Date";
 import { Star, Clock } from "react-feather";
-import { FeatureFragment, TvSeriesFragment } from "../generated/graphql";
+import {
+  FeatureFragment,
+  TvSeriesFragment,
+  TvSeasonFragment,
+} from "../generated/graphql";
 import { isSameDay } from "date-fns/isSameDay";
 import { parseISO } from "date-fns/parseISO";
 
@@ -122,3 +126,34 @@ export const TvSeries: React.FunctionComponent<{
     {tvSeries.notes ? <div className="text-xs">{tvSeries.notes}</div> : null}
   </Watching>
 );
+
+export const TvSeason: React.FunctionComponent<{
+  tvSeason: TvSeasonFragment;
+}> = ({ tvSeason }) => {
+  const { series } = tvSeason;
+  const seasonLabel = tvSeason.seasonTitle
+    ? `Season ${tvSeason.seasonNumber} / ${tvSeason.seasonTitle}`
+    : `Season ${tvSeason.seasonNumber}`;
+
+  return (
+    <Watching
+      image={series.image}
+      title={series.title}
+      rating={tvSeason.rating}
+      releaseYear={series.releaseYear}
+      shelf={tvSeason.shelf}
+      type="TV Season"
+    >
+      <div className="text-xs font-medium">{seasonLabel}</div>
+      <div className="text-xs">
+        <Clock className="inline" size={14} /> <Date>{tvSeason.addedAt}</Date>
+        {!isSameDay(parseISO(tvSeason.addedAt), parseISO(tvSeason.movedAt)) ? (
+          <>
+            {" "}
+            — <Date>{tvSeason.movedAt}</Date>
+          </>
+        ) : null}
+      </div>
+    </Watching>
+  );
+};

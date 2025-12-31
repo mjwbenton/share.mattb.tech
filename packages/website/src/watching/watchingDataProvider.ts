@@ -3,20 +3,26 @@ import { DataProvider } from "@mattb.tech/data-fetching";
 import { WatchingQuery } from "generated/graphql";
 import { useQuery } from "@apollo/client";
 
-const QUERY = gql`
-  query Watching($after: ID) {
-    watching(first: 15, after: $after) {
-      total
-      hasNextPage
-      nextPageCursor
-      items {
-        __typename
-        ...Feature
-        ...TvSeries
-      }
+export const featureFragment = gql`
+  fragment Feature on Feature {
+    id
+    title
+    image {
+      url
+      width
+      height
     }
+    shelf {
+      name
+    }
+    releaseYear
+    movedAt
+    notes
+    rating
   }
+`;
 
+export const tvSeriesFragment = gql`
   fragment TvSeries on TvSeries {
     id
     title
@@ -47,23 +53,48 @@ const QUERY = gql`
       }
     }
   }
+`;
 
-  fragment Feature on Feature {
+export const tvSeasonFragment = gql`
+  fragment TvSeason on TvSeason {
     id
-    title
-    image {
-      url
-      width
-      height
-    }
+    seasonNumber
+    seasonTitle
+    rating
+    movedAt
+    addedAt
     shelf {
+      id
       name
     }
-    releaseYear
-    movedAt
-    notes
-    rating
+    series {
+      title
+      releaseYear
+      image {
+        url
+        width
+        height
+      }
+    }
   }
+`;
+
+const QUERY = gql`
+  query Watching($after: ID) {
+    watching(first: 15, after: $after) {
+      total
+      hasNextPage
+      nextPageCursor
+      items {
+        __typename
+        ...Feature
+        ...TvSeries
+      }
+    }
+  }
+
+  ${featureFragment}
+  ${tvSeriesFragment}
 `;
 
 const watchingDataProvider: DataProvider<never, WatchingQuery> = async (
