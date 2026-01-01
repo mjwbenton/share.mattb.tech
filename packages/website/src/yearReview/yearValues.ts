@@ -110,6 +110,43 @@ const YEAR_VALUES = {
       listened: 4998,
     },
   },
+  2025: {
+    year: 2025,
+    photos: 1260,
+    commitStats: {
+      commits: 943,
+      repositoriesCommittedTo: 20,
+    },
+    books: {
+      started: 22,
+      finished: 19,
+      gaveUp: 2,
+    },
+    features: {
+      watched: 34,
+    },
+    videoGames: {
+      started: 28,
+      completed: 19,
+      gaveUp: 6,
+    },
+    tvSeasons: {
+      started: 43,
+      finished: 40,
+      gaveUp: 5,
+    },
+    activity: {
+      walkingRunningDistance: 3249,
+      swimmingDistance: 134,
+      workouts: {
+        count: 180,
+        duration: 261053,
+      },
+    },
+    tracks: {
+      listened: 3618,
+    },
+  },
 };
 
 export default YEAR_VALUES;
