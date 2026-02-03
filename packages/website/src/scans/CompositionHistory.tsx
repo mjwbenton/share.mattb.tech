@@ -1,5 +1,6 @@
 import Tile from "component/Tile";
 import { BodyScan } from "./types";
+import { chartColors } from "./colours";
 import {
   VictoryAxis,
   VictoryChart,
@@ -47,9 +48,9 @@ export default function CompositionHistory({ scans }: CompositionHistoryProps) {
     y: s.obesityAnalysis.percentBodyFat,
   }));
 
-  const colorWeight = "#10b981";
-  const colorSMM = "#8b5cf6";
-  const colorPBF = "#f59e0b";
+  const colorWeight = chartColors.weight;
+  const colorSMM = chartColors.smm;
+  const colorPBF = chartColors.pbf;
 
   return (
     <Tile>

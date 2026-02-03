@@ -1,5 +1,6 @@
 import Tile from "component/Tile";
 import { BodyScansData } from "./types";
+import { statusColors, statusBackgrounds } from "./colours";
 
 interface MuscleFatAnalysisProps {
   smm: number;
@@ -45,9 +46,9 @@ function AnalysisBar({ label, value, min, max, unit }: AnalysisBarProps) {
   }
 
   const zoneColorValues = {
-    under: "#f59e0b", // amber-500
-    normal: "#10b981", // emerald-500
-    over: "#ef4444", // red-500
+    under: statusColors.warning.solid,
+    normal: statusColors.good.solid,
+    over: statusColors.bad.solid,
   };
 
   return (
@@ -62,18 +63,18 @@ function AnalysisBar({ label, value, min, max, unit }: AnalysisBarProps) {
         <div
           style={{
             width: `${underPercent}%`,
-            backgroundColor: "rgba(245, 158, 11, 0.3)",
+            backgroundColor: statusBackgrounds.warning.medium,
           }}
         />
         <div
           style={{
             width: `${normalPercent}%`,
-            backgroundColor: "rgba(16, 185, 129, 0.3)",
+            backgroundColor: statusBackgrounds.good.medium,
           }}
         />
         <div
           className="flex-1"
-          style={{ backgroundColor: "rgba(239, 68, 68, 0.3)" }}
+          style={{ backgroundColor: statusBackgrounds.bad.medium }}
         />
         <div
           className="absolute w-2 h-full rounded shadow-sm"

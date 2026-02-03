@@ -1,5 +1,6 @@
 import Tile from "component/Tile";
 import { BalanceStatus } from "./types";
+import { badgeStyles } from "./colours";
 
 interface BodyBalanceCardProps {
   bodyBalance: {
@@ -14,12 +15,9 @@ function BalanceBadge({ status }: { status: BalanceStatus }) {
     BalanceStatus,
     { backgroundColor: string; color: string }
   > = {
-    Balanced: { backgroundColor: "rgba(16, 185, 129, 0.2)", color: "#059669" },
-    SlightlyUnbalanced: {
-      backgroundColor: "rgba(245, 158, 11, 0.2)",
-      color: "#d97706",
-    },
-    Unbalanced: { backgroundColor: "rgba(239, 68, 68, 0.2)", color: "#dc2626" },
+    Balanced: badgeStyles.good,
+    SlightlyUnbalanced: badgeStyles.warning,
+    Unbalanced: badgeStyles.bad,
   };
 
   const labelMap: Record<BalanceStatus, string> = {

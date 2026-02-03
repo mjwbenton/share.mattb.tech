@@ -1,4 +1,5 @@
 import Tile from "component/Tile";
+import { statusColors, statusBackgrounds, badgeStyles } from "./colours";
 
 interface VisceralFatGaugeProps {
   level: number;
@@ -9,9 +10,9 @@ export default function VisceralFatGauge({ level }: VisceralFatGaugeProps) {
   const levelPercent = (level / maxLevel) * 100;
 
   const getZoneColorValue = (l: number) => {
-    if (l <= 9) return "#10b981"; // emerald-500
-    if (l <= 14) return "#f59e0b"; // amber-500
-    return "#ef4444"; // red-500
+    if (l <= 9) return statusColors.good.solid;
+    if (l <= 14) return statusColors.warning.solid;
+    return statusColors.bad.solid;
   };
 
   const getZoneLabel = (l: number) => {
@@ -21,11 +22,9 @@ export default function VisceralFatGauge({ level }: VisceralFatGaugeProps) {
   };
 
   const getBadgeStyle = (l: number) => {
-    if (l <= 9)
-      return { backgroundColor: "rgba(16, 185, 129, 0.2)", color: "#059669" };
-    if (l <= 14)
-      return { backgroundColor: "rgba(245, 158, 11, 0.2)", color: "#d97706" };
-    return { backgroundColor: "rgba(239, 68, 68, 0.2)", color: "#dc2626" };
+    if (l <= 9) return badgeStyles.good;
+    if (l <= 14) return badgeStyles.warning;
+    return badgeStyles.bad;
   };
 
   return (
@@ -47,14 +46,20 @@ export default function VisceralFatGauge({ level }: VisceralFatGaugeProps) {
 
         <div className="relative h-4 flex rounded overflow-hidden mb-2">
           <div
-            style={{ width: "45%", backgroundColor: "rgba(16, 185, 129, 0.3)" }}
+            style={{
+              width: "45%",
+              backgroundColor: statusBackgrounds.good.medium,
+            }}
           />
           <div
-            style={{ width: "25%", backgroundColor: "rgba(245, 158, 11, 0.3)" }}
+            style={{
+              width: "25%",
+              backgroundColor: statusBackgrounds.warning.medium,
+            }}
           />
           <div
             className="flex-1"
-            style={{ backgroundColor: "rgba(239, 68, 68, 0.3)" }}
+            style={{ backgroundColor: statusBackgrounds.bad.medium }}
           />
           <div
             className="absolute w-2 h-full rounded shadow-sm"

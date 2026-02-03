@@ -1,4 +1,5 @@
 import Tile from "component/Tile";
+import { statusColors, statusBackgrounds } from "./colours";
 
 interface ObesityAnalysisProps {
   obesityAnalysis: {
@@ -87,26 +88,26 @@ export default function ObesityAnalysis({
     {
       max: 18.5,
       label: "Under",
-      bgColor: "rgba(245, 158, 11, 0.3)",
-      markerColor: "#f59e0b",
+      bgColor: statusBackgrounds.warning.medium,
+      markerColor: statusColors.warning.solid,
     },
     {
       max: 25,
       label: "Normal",
-      bgColor: "rgba(16, 185, 129, 0.3)",
-      markerColor: "#10b981",
+      bgColor: statusBackgrounds.good.medium,
+      markerColor: statusColors.good.solid,
     },
     {
       max: 30,
       label: "Over",
-      bgColor: "rgba(245, 158, 11, 0.3)",
-      markerColor: "#f59e0b",
+      bgColor: statusBackgrounds.warning.medium,
+      markerColor: statusColors.warning.solid,
     },
     {
       max: 40,
       label: "Obese",
-      bgColor: "rgba(239, 68, 68, 0.3)",
-      markerColor: "#ef4444",
+      bgColor: statusBackgrounds.bad.medium,
+      markerColor: statusColors.bad.solid,
     },
   ];
 
@@ -114,26 +115,26 @@ export default function ObesityAnalysis({
     {
       max: 10,
       label: "Under",
-      bgColor: "rgba(245, 158, 11, 0.3)",
-      markerColor: "#f59e0b",
+      bgColor: statusBackgrounds.warning.medium,
+      markerColor: statusColors.warning.solid,
     },
     {
       max: 20,
       label: "Normal",
-      bgColor: "rgba(16, 185, 129, 0.3)",
-      markerColor: "#10b981",
+      bgColor: statusBackgrounds.good.medium,
+      markerColor: statusColors.good.solid,
     },
     {
       max: 25,
       label: "Over",
-      bgColor: "rgba(245, 158, 11, 0.3)",
-      markerColor: "#f59e0b",
+      bgColor: statusBackgrounds.warning.medium,
+      markerColor: statusColors.warning.solid,
     },
     {
       max: 40,
       label: "Obese",
-      bgColor: "rgba(239, 68, 68, 0.3)",
-      markerColor: "#ef4444",
+      bgColor: statusBackgrounds.bad.medium,
+      markerColor: statusColors.bad.solid,
     },
   ];
 

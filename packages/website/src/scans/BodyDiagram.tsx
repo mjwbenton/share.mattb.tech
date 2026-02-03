@@ -1,4 +1,5 @@
 import { SegmentalMeasurement } from "./types";
+import { zoneStyles } from "./colours";
 
 interface BodyDiagramProps {
   data: SegmentalMeasurement;
@@ -9,17 +10,13 @@ function getSegmentStyle(percent: number, type: "lean" | "fat") {
   // For lean mass: under (<90%) is bad (amber), normal is green, over is usually fine
   // For fat mass: under is good, over (>110%) is bad (red)
   if (type === "lean") {
-    if (percent < 90)
-      return { fill: "rgba(245, 158, 11, 0.6)", stroke: "#d97706" }; // amber
-    if (percent > 110)
-      return { fill: "rgba(239, 68, 68, 0.6)", stroke: "#dc2626" }; // red
-    return { fill: "rgba(16, 185, 129, 0.6)", stroke: "#059669" }; // emerald
+    if (percent < 90) return zoneStyles.warning;
+    if (percent > 110) return zoneStyles.bad;
+    return zoneStyles.good;
   } else {
-    if (percent < 90)
-      return { fill: "rgba(16, 185, 129, 0.6)", stroke: "#059669" }; // emerald (good)
-    if (percent > 110)
-      return { fill: "rgba(239, 68, 68, 0.6)", stroke: "#dc2626" }; // red (bad)
-    return { fill: "rgba(245, 158, 11, 0.6)", stroke: "#d97706" }; // amber (borderline)
+    if (percent < 90) return zoneStyles.good;
+    if (percent > 110) return zoneStyles.bad;
+    return zoneStyles.warning;
   }
 }
 

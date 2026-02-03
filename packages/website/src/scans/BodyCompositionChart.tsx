@@ -1,5 +1,6 @@
 import Tile from "component/Tile";
 import { BodyScansData } from "./types";
+import { statusColors, statusBackgrounds } from "./colours";
 
 interface BodyCompositionChartProps {
   composition: {
@@ -34,7 +35,9 @@ function CompositionBar({ label, value, min, max, unit }: CompositionBarProps) {
   );
 
   const isInRange = value >= min && value <= max;
-  const markerBgColor = isInRange ? "#10b981" : "#f59e0b"; // emerald-500 or amber-500
+  const markerBgColor = isInRange
+    ? statusColors.good.solid
+    : statusColors.warning.solid;
 
   return (
     <div className="mb-4">
@@ -50,7 +53,7 @@ function CompositionBar({ label, value, min, max, unit }: CompositionBarProps) {
           style={{
             left: `${normalStartPercent}%`,
             width: `${normalWidthPercent}%`,
-            backgroundColor: "rgba(16, 185, 129, 0.3)",
+            backgroundColor: statusBackgrounds.good.medium,
           }}
         />
         <div
