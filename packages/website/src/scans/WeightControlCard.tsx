@@ -1,5 +1,4 @@
 import Tile from "component/Tile";
-import { statusColors } from "./colours";
 
 interface WeightControlCardProps {
   weightControl: {
@@ -16,12 +15,6 @@ export default function WeightControlCard({
   const formatChange = (value: number) => {
     const sign = value > 0 ? "+" : "";
     return `${sign}${value.toFixed(1)} kg`;
-  };
-
-  const getChangeColor = (value: number, inverse = false) => {
-    if (value === 0) return undefined;
-    const isPositive = inverse ? value < 0 : value > 0;
-    return isPositive ? statusColors.good.solid : statusColors.warning.solid;
   };
 
   return (
@@ -41,30 +34,19 @@ export default function WeightControlCard({
         <div className="grid grid-cols-3 gap-2 text-center">
           <div>
             <div className="text-xs text-dark-3 dark:text-light-3">Weight</div>
-            <div
-              className="text-sm font-bold text-dark-2 dark:text-light-2"
-              style={{
-                color: getChangeColor(weightControl.weightChange, true),
-              }}
-            >
+            <div className="text-sm font-bold text-dark-2 dark:text-light-2">
               {formatChange(weightControl.weightChange)}
             </div>
           </div>
           <div>
             <div className="text-xs text-dark-3 dark:text-light-3">Fat</div>
-            <div
-              className="text-sm font-bold text-dark-2 dark:text-light-2"
-              style={{ color: getChangeColor(weightControl.fatChange, true) }}
-            >
+            <div className="text-sm font-bold text-dark-2 dark:text-light-2">
               {formatChange(weightControl.fatChange)}
             </div>
           </div>
           <div>
             <div className="text-xs text-dark-3 dark:text-light-3">Muscle</div>
-            <div
-              className="text-sm font-bold text-dark-2 dark:text-light-2"
-              style={{ color: getChangeColor(weightControl.muscleChange) }}
-            >
+            <div className="text-sm font-bold text-dark-2 dark:text-light-2">
               {formatChange(weightControl.muscleChange)}
             </div>
           </div>

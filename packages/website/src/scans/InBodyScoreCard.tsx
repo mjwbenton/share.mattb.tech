@@ -1,6 +1,5 @@
 import Tile from "component/Tile";
 import { useEffect, useState } from "react";
-import { statusColors } from "./colours";
 
 interface InBodyScoreCardProps {
   score: number;
@@ -12,17 +11,10 @@ export default function InBodyScoreCard({ score }: InBodyScoreCardProps) {
     setMounted(true);
   }, []);
 
-  const getScoreColor = (s: number) => {
-    if (s < 60) return statusColors.warning.solid;
-    if (s >= 80) return statusColors.good.solid;
-    return undefined;
-  };
-
   const percentage = (score / 100) * 100;
   const radius = 45;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
-  const scoreColor = getScoreColor(score);
 
   return (
     <Tile>
@@ -49,18 +41,13 @@ export default function InBodyScoreCard({ score }: InBodyScoreCardProps) {
                 strokeLinecap="round"
                 strokeDasharray={circumference}
                 strokeDashoffset={strokeDashoffset}
-                stroke={scoreColor ?? "currentColor"}
-                className={
-                  scoreColor ? undefined : "text-dark-2 dark:text-light-2"
-                }
+                stroke="currentColor"
+                className="text-dark-2 dark:text-light-2"
               />
             </svg>
           )}
           <div className="absolute inset-0 flex items-center justify-center">
-            <span
-              className={`text-4xl font-bold ${scoreColor ? "" : "text-dark-2 dark:text-light-2"}`}
-              style={scoreColor ? { color: scoreColor } : undefined}
-            >
+            <span className="text-4xl font-bold text-dark-2 dark:text-light-2">
               {score}
             </span>
           </div>
