@@ -16,6 +16,7 @@ export interface BodyScansData {
 export interface BodyScan {
   date: string;
   time: string;
+  sourceImage?: string;
   inBodyScore: number;
   bodyComposition: {
     totalBodyWater: number;

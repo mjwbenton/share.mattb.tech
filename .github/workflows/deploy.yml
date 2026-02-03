@@ -41,6 +41,8 @@ jobs:
         run: yarn workspace @mattb.tech/lonesome-website run copy-pages:ci
       - name: Copy data from share.mattb.tech-pages repository
         run: yarn workspace @mattb.tech/lonesome-website run copy-data:ci
+      - name: Copy images from share.mattb.tech-pages repository
+        run: yarn workspace @mattb.tech/lonesome-website run copy-images:ci
       - run: yarn build
       - run: yarn run check
       - name: Configure AWS credentials for deployment

@@ -72,6 +72,16 @@ export default function BodyScans() {
         <Expander text="Technical Details">
           <ImpedanceTable impedance={scan.impedance} />
         </Expander>
+
+        {scan.sourceImage && (
+          <Expander text="Source Image">
+            <img
+              src={`/images/${scan.sourceImage}`}
+              alt={`InBody scan from ${scan.date}`}
+              className="max-w-full h-auto"
+            />
+          </Expander>
+        )}
       </div>
     </EmbeddedWrapper>
   );

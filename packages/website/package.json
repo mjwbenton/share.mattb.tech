@@ -17,7 +17,9 @@
     "copy-pages:local": "rsync -av ../../../share.mattb.tech-pages/pages/ pages/",
     "copy-pages:ci": "rsync -av ../../share.mattb.tech-pages/pages/ pages/",
     "copy-data:local": "rsync -av ../../../share.mattb.tech-pages/data/ data/",
-    "copy-data:ci": "rsync -av ../../share.mattb.tech-pages/data/ data/"
+    "copy-data:ci": "rsync -av ../../share.mattb.tech-pages/data/ data/",
+    "copy-images:local": "rsync -av ../../../share.mattb.tech-pages/images/ public/images/",
+    "copy-images:ci": "rsync -av ../../share.mattb.tech-pages/images/ public/images/"
   },
   "author": "Matt Benton <m@mattb.tech>",
   "license": "UNLICENSED",

@@ -21,3 +21,5 @@ packages/website/pages
 !packages/website/pages/_*.tsx
 
 packages/website/data
+
+packages/website/public/images
