@@ -14,8 +14,10 @@
     "clean": "../../scripts/clean.sh && rm -Rf out .next",
     "fix": "../../scripts/fix.sh",
     "codegen": "graphql-codegen --config codegen.yml",
-    "copy-pages:local": "rsync -av --exclude='.github' --exclude='.git' ../../../share.mattb.tech-pages/ pages/",
-    "copy-pages:ci": "rsync -av --exclude='.github' --exclude='.git' ../../share.mattb.tech-pages/ pages/"
+    "copy-pages:local": "rsync -av ../../../share.mattb.tech-pages/pages/ pages/",
+    "copy-pages:ci": "rsync -av ../../share.mattb.tech-pages/pages/ pages/",
+    "copy-data:local": "rsync -av ../../../share.mattb.tech-pages/data/ data/",
+    "copy-data:ci": "rsync -av ../../share.mattb.tech-pages/data/ data/"
   },
   "author": "Matt Benton <m@mattb.tech>",
   "license": "UNLICENSED",

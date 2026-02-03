@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 import { DataProvider, usePageData } from "@mattb.tech/data-fetching";
 import { CountsBetweenDatesQuery } from "generated/graphql";
-import YEAR_VALUES from "./yearValues";
+import YEAR_VALUES from "../../data/yearValues.json";
 import { ApolloClient, NormalizedCacheObject, useQuery } from "@apollo/client";
 import { formatISO } from "date-fns/formatISO";
 import { subYears } from "date-fns/subYears";
@@ -205,10 +205,11 @@ async function fetchForYear(
   const value = transformResult(year, result.data);
   // Check the values are those expected – hacky test to see if any code changes
   // accidentally cause these values to change after the fact
+  const yearKey = String(year) as keyof typeof YEAR_VALUES;
   if (
     !overrideEndDate &&
-    year in YEAR_VALUES &&
-    JSON.stringify(value) !== JSON.stringify(YEAR_VALUES[year])
+    yearKey in YEAR_VALUES &&
+    JSON.stringify(value) !== JSON.stringify(YEAR_VALUES[yearKey])
   ) {
     console.log(JSON.stringify(value, null, 2));
     throw new Error(`Year values for ${year} have changed unexpectedly`);

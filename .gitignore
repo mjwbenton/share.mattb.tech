@@ -19,3 +19,5 @@ yarn-error.log
 packages/website/pages
 !packages/website/pages/404.tsx
 !packages/website/pages/_*.tsx
+
+packages/website/data
