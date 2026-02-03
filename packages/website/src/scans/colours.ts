@@ -31,12 +31,6 @@ export const statusBackgrounds = {
   },
 } as const;
 
-export const chartColors = {
-  weight: "#10b981",
-  smm: "#8b5cf6",
-  pbf: "#f59e0b",
-} as const;
-
 export const badgeStyles = {
   good: {
     backgroundColor: statusBackgrounds.good.light,

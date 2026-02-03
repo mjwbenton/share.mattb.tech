@@ -1,4 +1,3 @@
-import { useState } from "react";
 import EmbeddedWrapper from "component/EmbeddedWrapper";
 import { Wall } from "component/Tile";
 import Expander from "component/Expander";
@@ -11,32 +10,20 @@ import ObesityAnalysis from "./ObesityAnalysis";
 import BodyBalanceCard from "./BodyBalanceCard";
 import VisceralFatGauge from "./VisceralFatGauge";
 import SegmentalAnalysis from "./SegmentalAnalysis";
-import ScanSelector from "./ScanSelector";
-import CompositionHistory from "./CompositionHistory";
 import ImpedanceTable from "./ImpedanceTable";
 
 export default function BodyScans() {
   const { scans, referenceRanges } = useBodyScans();
-  const [selectedIndex, setSelectedIndex] = useState(0);
 
   if (!scans || scans.length === 0) {
     return null;
   }
 
-  const scan = scans[selectedIndex];
-  const hasMultipleScans = scans.length > 1;
+  const scan = scans[0];
 
   return (
     <EmbeddedWrapper>
       <div className="space-y-8">
-        {hasMultipleScans && (
-          <ScanSelector
-            scans={scans}
-            selectedIndex={selectedIndex}
-            onSelect={setSelectedIndex}
-          />
-        )}
-
         <Wall>
           <InBodyScoreCard score={scan.inBodyScore} />
           <WeightControlCard weightControl={scan.weightControl} />
@@ -66,8 +53,6 @@ export default function BodyScans() {
           segmentalLean={scan.segmentalLean}
           segmentalFat={scan.segmentalFat}
         />
-
-        {hasMultipleScans && <CompositionHistory scans={scans} />}
 
         <Expander text="Technical Details">
           <ImpedanceTable impedance={scan.impedance} />
