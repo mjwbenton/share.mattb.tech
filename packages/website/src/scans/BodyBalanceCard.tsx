@@ -10,10 +10,16 @@ interface BodyBalanceCardProps {
 }
 
 function BalanceBadge({ status }: { status: BalanceStatus }) {
-  const colorMap: Record<BalanceStatus, string> = {
-    Balanced: "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400",
-    SlightlyUnbalanced: "bg-amber-500/20 text-amber-600 dark:text-amber-400",
-    Unbalanced: "bg-red-500/20 text-red-600 dark:text-red-400",
+  const styleMap: Record<
+    BalanceStatus,
+    { backgroundColor: string; color: string }
+  > = {
+    Balanced: { backgroundColor: "rgba(16, 185, 129, 0.2)", color: "#059669" },
+    SlightlyUnbalanced: {
+      backgroundColor: "rgba(245, 158, 11, 0.2)",
+      color: "#d97706",
+    },
+    Unbalanced: { backgroundColor: "rgba(239, 68, 68, 0.2)", color: "#dc2626" },
   };
 
   const labelMap: Record<BalanceStatus, string> = {
@@ -23,7 +29,7 @@ function BalanceBadge({ status }: { status: BalanceStatus }) {
   };
 
   return (
-    <span className={`px-2 py-1 rounded text-xs ${colorMap[status]}`}>
+    <span className="px-2 py-1 rounded text-xs" style={styleMap[status]}>
       {labelMap[status]}
     </span>
   );
