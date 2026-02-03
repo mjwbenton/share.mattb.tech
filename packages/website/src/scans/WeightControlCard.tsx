@@ -1,4 +1,5 @@
 import Tile from "component/Tile";
+import { statusColors } from "./colours";
 
 interface WeightControlCardProps {
   weightControl: {
@@ -18,9 +19,9 @@ export default function WeightControlCard({
   };
 
   const getChangeColor = (value: number, inverse = false) => {
-    if (value === 0) return "text-dark-2 dark:text-light-2";
+    if (value === 0) return undefined;
     const isPositive = inverse ? value < 0 : value > 0;
-    return isPositive ? "text-emerald-500" : "text-amber-500";
+    return isPositive ? statusColors.good.solid : statusColors.warning.solid;
   };
 
   return (
@@ -41,7 +42,10 @@ export default function WeightControlCard({
           <div>
             <div className="text-xs text-dark-3 dark:text-light-3">Weight</div>
             <div
-              className={`text-sm font-bold ${getChangeColor(weightControl.weightChange, true)}`}
+              className="text-sm font-bold text-dark-2 dark:text-light-2"
+              style={{
+                color: getChangeColor(weightControl.weightChange, true),
+              }}
             >
               {formatChange(weightControl.weightChange)}
             </div>
@@ -49,7 +53,8 @@ export default function WeightControlCard({
           <div>
             <div className="text-xs text-dark-3 dark:text-light-3">Fat</div>
             <div
-              className={`text-sm font-bold ${getChangeColor(weightControl.fatChange, true)}`}
+              className="text-sm font-bold text-dark-2 dark:text-light-2"
+              style={{ color: getChangeColor(weightControl.fatChange, true) }}
             >
               {formatChange(weightControl.fatChange)}
             </div>
@@ -57,7 +62,8 @@ export default function WeightControlCard({
           <div>
             <div className="text-xs text-dark-3 dark:text-light-3">Muscle</div>
             <div
-              className={`text-sm font-bold ${getChangeColor(weightControl.muscleChange)}`}
+              className="text-sm font-bold text-dark-2 dark:text-light-2"
+              style={{ color: getChangeColor(weightControl.muscleChange) }}
             >
               {formatChange(weightControl.muscleChange)}
             </div>

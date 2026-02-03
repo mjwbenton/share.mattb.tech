@@ -1,6 +1,7 @@
 import Tile from "component/Tile";
 import { SegmentalMeasurement } from "./types";
 import BodyDiagram from "./BodyDiagram";
+import { statusBackgrounds } from "./colours";
 
 interface SegmentalAnalysisProps {
   segmentalLean: SegmentalMeasurement;
@@ -18,15 +19,24 @@ export default function SegmentalAnalysis({
 
         <div className="flex justify-between text-xs text-dark-3 dark:text-light-3 mb-2">
           <span>
-            <span className="inline-block w-3 h-3 bg-amber-500/60 mr-1" />
+            <span
+              className="inline-block w-3 h-3 mr-1"
+              style={{ backgroundColor: statusBackgrounds.warning.heavy }}
+            />
             Under (&lt;90%)
           </span>
           <span>
-            <span className="inline-block w-3 h-3 bg-emerald-500/60 mr-1" />
+            <span
+              className="inline-block w-3 h-3 mr-1"
+              style={{ backgroundColor: statusBackgrounds.good.heavy }}
+            />
             Normal (90-110%)
           </span>
           <span>
-            <span className="inline-block w-3 h-3 bg-red-500/60 mr-1" />
+            <span
+              className="inline-block w-3 h-3 mr-1"
+              style={{ backgroundColor: statusBackgrounds.bad.heavy }}
+            />
             Over (&gt;110%)
           </span>
         </div>

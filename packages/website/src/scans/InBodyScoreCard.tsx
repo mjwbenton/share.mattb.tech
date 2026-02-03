@@ -1,5 +1,6 @@
 import Tile from "component/Tile";
 import { useEffect, useState } from "react";
+import { statusColors } from "./colours";
 
 interface InBodyScoreCardProps {
   score: number;
@@ -12,15 +13,16 @@ export default function InBodyScoreCard({ score }: InBodyScoreCardProps) {
   }, []);
 
   const getScoreColor = (s: number) => {
-    if (s < 60) return "text-amber-500";
-    if (s >= 80) return "text-emerald-500";
-    return "text-dark-2 dark:text-light-2";
+    if (s < 60) return statusColors.warning.solid;
+    if (s >= 80) return statusColors.good.solid;
+    return undefined;
   };
 
   const percentage = (score / 100) * 100;
   const radius = 45;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
+  const scoreColor = getScoreColor(score);
 
   return (
     <Tile>
@@ -43,17 +45,22 @@ export default function InBodyScoreCard({ score }: InBodyScoreCardProps) {
                 cy="50"
                 r={radius}
                 fill="none"
-                stroke="currentColor"
                 strokeWidth="8"
                 strokeLinecap="round"
                 strokeDasharray={circumference}
                 strokeDashoffset={strokeDashoffset}
-                className={getScoreColor(score)}
+                stroke={scoreColor ?? "currentColor"}
+                className={
+                  scoreColor ? undefined : "text-dark-2 dark:text-light-2"
+                }
               />
             </svg>
           )}
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className={`text-4xl font-bold ${getScoreColor(score)}`}>
+            <span
+              className={`text-4xl font-bold ${scoreColor ? "" : "text-dark-2 dark:text-light-2"}`}
+              style={scoreColor ? { color: scoreColor } : undefined}
+            >
               {score}
             </span>
           </div>
