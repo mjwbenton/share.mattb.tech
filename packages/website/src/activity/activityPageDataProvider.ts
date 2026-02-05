@@ -99,7 +99,9 @@ const QUERY = gql`
   }
 
   fragment StrengthWorkoutData on Activity {
-    strengthWorkouts: workouts(type: "functional_strength_training") {
+    strengthWorkouts: workouts(
+      types: ["functional_strength_training", "traditional_strength_training"]
+    ) {
       count
       durationSeconds
       activeEnergyBurned
