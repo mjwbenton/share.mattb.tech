@@ -37,12 +37,8 @@ jobs:
           echo "COGNITO_CLIENT_ID=$(aws ssm get-parameter --region us-east-1 --name "arn:aws:ssm:us-east-1:858777967843:parameter/mattb-sso/user-pool-client-id" --query "Parameter.Value" --output text)" >> $GITHUB_ENV
           echo "COGNITO_DOMAIN=$(aws ssm get-parameter --region us-east-1 --name "arn:aws:ssm:us-east-1:858777967843:parameter/mattb-sso/user-pool-domain" --query "Parameter.Value" --output text)" >> $GITHUB_ENV
       - run: yarn install --immutable
-      - name: Copy pages from share.mattb.tech-pages repository
-        run: yarn workspace @mattb.tech/lonesome-website run copy-pages:ci
-      - name: Copy data from share.mattb.tech-pages repository
-        run: yarn workspace @mattb.tech/lonesome-website run copy-data:ci
-      - name: Copy images from share.mattb.tech-pages repository
-        run: yarn workspace @mattb.tech/lonesome-website run copy-images:ci
+      - name: Copy content from share.mattb.tech-pages repository
+        run: yarn copy-content:ci
       - run: yarn build
       - run: yarn run check
       - name: Configure AWS credentials for deployment

@@ -19,8 +19,8 @@
     "clean": "yarn workspaces foreach -v run clean",
     "check": "yarn workspaces foreach -v run check",
     "fix": "yarn workspaces foreach -v run fix",
-    "copy-pages:local": "yarn workspace @mattb.tech/lonesome-website run copy-pages:local",
-    "copy-pages:ci": "yarn workspace @mattb.tech/lonesome-website run copy-pages:ci"
+    "copy-content:local": "yarn workspace @mattb.tech/lonesome-website run copy-content:local",
+    "copy-content:ci": "yarn workspace @mattb.tech/lonesome-website run copy-content:ci"
   },
   "packageManager": "yarn@3.2.0",
   "resolutions": {
