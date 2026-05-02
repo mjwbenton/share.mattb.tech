@@ -33,6 +33,7 @@ const QUERY = gql`
       total
     }
     readBooks: bookShelf(id: Read) {
+      id
       items(
         first: 0
         startDate: $startDateTime
@@ -43,6 +44,7 @@ const QUERY = gql`
       }
     }
     gaveUpBooks: bookShelf(id: DidNotFinish) {
+      id
       items(
         first: 0
         startDate: $startDateTime
@@ -69,6 +71,7 @@ const QUERY = gql`
       total
     }
     finishedTvSeasons: tvSeasonShelf(id: FinishedSeason) {
+      id
       items(
         first: 0
         startDate: $startDateTime
@@ -79,6 +82,7 @@ const QUERY = gql`
       }
     }
     gaveUpTvSeasons: tvSeasonShelf(id: GaveUp) {
+      id
       items(
         first: 0
         startDate: $startDateTime
@@ -97,6 +101,7 @@ const QUERY = gql`
       total
     }
     completedVideoGames: videoGameShelf(id: Completed) {
+      id
       items(
         first: 0
         startDate: $startDateTime
@@ -107,6 +112,7 @@ const QUERY = gql`
       }
     }
     gaveUpVideoGames: videoGameShelf(id: GaveUp) {
+      id
       items(
         first: 0
         startDate: $startDateTime
