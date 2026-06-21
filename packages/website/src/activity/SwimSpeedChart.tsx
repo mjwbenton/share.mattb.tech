@@ -1,6 +1,5 @@
 import {
   VictoryAxis,
-  VictoryBar,
   VictoryChart,
   VictoryGroup,
   VictoryLabel,
@@ -12,15 +11,21 @@ import useChartTheme from "./useChartTheme";
 import { useEffect, useState } from "react";
 import { formatDuration } from "./format";
 
-export type BarChartData = readonly {
+type MonthData = readonly {
   readonly month: number;
   readonly spm: number | undefined;
 }[];
 
-export default function SwimSpeedChart({ data }: { data: BarChartData }) {
+export type SwimSpeedChartData = {
+  readonly thisYear: MonthData;
+  readonly lastYear: MonthData;
+};
+
+export default function SwimSpeedChart({ data }: { data: SwimSpeedChartData }) {
   const {
     fontFamily,
     colorThisYear,
+    colorLastYear,
     fontSmall,
     fontBase,
     tooltipBackground,
@@ -35,6 +40,9 @@ export default function SwimSpeedChart({ data }: { data: BarChartData }) {
   if (!mounted) {
     return null;
   }
+
+  const thisYear = data.thisYear.filter((d) => d.spm != null);
+  const lastYear = data.lastYear.filter((d) => d.spm != null);
 
   return (
     <VictoryChart
@@ -53,7 +61,7 @@ export default function SwimSpeedChart({ data }: { data: BarChartData }) {
         />
       }
       domainPadding={10}
-      padding={{ left: 60, bottom: 60, right: 20, top: 30 }}
+      padding={{ left: 60, bottom: 30, right: 20, top: 30 }}
     >
       <VictoryLabel
         text="Average time to swim 100m by month"
@@ -76,20 +84,31 @@ export default function SwimSpeedChart({ data }: { data: BarChartData }) {
         }}
       />
       <VictoryAxis
-        tickCount={data.length}
+        tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
+        tickFormat={(m) => monthName(m)}
         style={{
           tickLabels: {
             fontFamily: fontFamily,
             fontSize: fontSmall,
             fill: baseColor,
-            angle: -45,
-            verticalAnchor: "middle",
-            textAnchor: "end",
           },
           axis: { stroke: baseColor },
         }}
       />
-      <VictoryGroup offset={-5}>
+      <VictoryGroup>
+        <VictoryLine
+          style={{
+            data: { stroke: colorLastYear, strokeWidth: 1 },
+            labels: {
+              fill: colorLastYear,
+              fontFamily: fontFamily,
+              fontSize: fontSmall,
+            },
+          }}
+          data={lastYear}
+          x="month"
+          y="spm"
+        />
         <VictoryLine
           style={{
             data: {
@@ -102,8 +121,8 @@ export default function SwimSpeedChart({ data }: { data: BarChartData }) {
               fontSize: fontSmall,
             },
           }}
-          data={data}
-          x={(d) => formatMonthYear(d)}
+          data={thisYear}
+          x="month"
           y="spm"
         />
       </VictoryGroup>
@@ -111,6 +130,8 @@ export default function SwimSpeedChart({ data }: { data: BarChartData }) {
   );
 }
 
-function formatMonthYear({ month, year }: { month: number; year: number }) {
-  return `${year}-${month.toString().padStart(2, "0")}`;
+function monthName(month: number) {
+  return new Date(2000, month - 1).toLocaleString("default", {
+    month: "short",
+  });
 }

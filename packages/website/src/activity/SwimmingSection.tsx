@@ -83,15 +83,16 @@ export default function SwimmingSection() {
           </Tile>
         </Wall>
         <SwimSpeedChart
-          data={
-            activity?.lastYear.swimWorkouts?.months
-              .concat(activity?.thisYear.swimWorkouts?.months ?? [])
-              .map(({ year, month, speed }) => ({
-                year,
-                month,
-                spm: speed?.spm,
-              })) ?? []
-          }
+          data={{
+            thisYear:
+              activity?.thisYear.swimWorkouts?.months.map(
+                ({ month, speed }) => ({ month, spm: speed?.spm }),
+              ) ?? [],
+            lastYear:
+              activity?.lastYear.swimWorkouts?.months.map(
+                ({ month, speed }) => ({ month, spm: speed?.spm }),
+              ) ?? [],
+          }}
         />
         <Expander text="Recent Swims">
           <StripedList>
