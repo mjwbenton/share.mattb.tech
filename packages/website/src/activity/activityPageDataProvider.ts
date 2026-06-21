@@ -20,6 +20,8 @@ const QUERY = gql`
       ...ActivityChartData
       ...ActivitySummaryData
       ...SwimSpeedData
+      ...RunningChartData
+      ...StrengthChartData
     }
     lastYear: activity(
       startDate: $startOfPreviousYear
@@ -27,6 +29,8 @@ const QUERY = gql`
     ) {
       ...ActivityChartData
       ...SwimSpeedData
+      ...RunningChartData
+      ...StrengthChartData
     }
     lastYearToDate: activity(
       startDate: $startOfPreviousYear
@@ -86,6 +90,40 @@ const QUERY = gql`
       days {
         km
         date
+      }
+    }
+  }
+
+  fragment RunningChartData on Activity {
+    runningWorkouts: workouts(type: "outdoor_run") {
+      months {
+        month
+        year
+        distance {
+          km
+        }
+      }
+      days {
+        date
+        distance {
+          km
+        }
+      }
+    }
+  }
+
+  fragment StrengthChartData on Activity {
+    strengthWorkouts: workouts(
+      types: ["functional_strength_training", "traditional_strength_training"]
+    ) {
+      months {
+        month
+        year
+        durationSeconds
+      }
+      days {
+        date
+        durationSeconds
       }
     }
   }

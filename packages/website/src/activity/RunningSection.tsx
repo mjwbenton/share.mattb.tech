@@ -8,6 +8,8 @@ import Icon from "component/Icon";
 import formatPercentageChange from "utils/formatPercentageChange";
 import StripedList, { StripeElement } from "component/StripedList";
 import { formatDuration, formatStartTime, formatKm } from "./format";
+import DistanceBarChart from "./DistanceBarChart";
+import DistanceAccumulationChart from "./DistanceAccumulationChart";
 export default function RunningSection() {
   const { activity, loading } = useActivityPage();
 
@@ -51,6 +53,26 @@ export default function RunningSection() {
             </span>
           </Tile>
         </Wall>
+        <DistanceBarChart
+          data={{
+            thisYear: (activity?.thisYear.runningWorkouts?.months ?? []).map(
+              (m) => ({ month: m.month, km: m.distance?.km ?? 0 }),
+            ),
+            lastYear: (activity?.lastYear.runningWorkouts?.months ?? []).map(
+              (m) => ({ month: m.month, km: m.distance?.km ?? 0 }),
+            ),
+          }}
+        />
+        <DistanceAccumulationChart
+          data={{
+            thisYear: (activity?.thisYear.runningWorkouts?.days ?? []).map(
+              (d) => ({ date: d.date, km: d.distance?.km ?? 0 }),
+            ),
+            lastYear: (activity?.lastYear.runningWorkouts?.days ?? []).map(
+              (d) => ({ date: d.date, km: d.distance?.km ?? 0 }),
+            ),
+          }}
+        />
         <Expander text="Recent Workouts">
           <StripedList>
             {trailing30.workouts.toReversed().map((workout) => (
