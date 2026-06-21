@@ -7,36 +7,29 @@ import {
   VictoryTooltip,
   VictoryVoronoiContainer,
 } from "victory";
-import { getDayOfYear } from "date-fns/getDayOfYear";
-import { parseISO } from "date-fns/parseISO";
 import useChartTheme from "./useChartTheme";
 import { useEffect, useState } from "react";
 import { formatDuration } from "./format";
 
-export type DurationAccumulationChartData = {
-  readonly thisYear: readonly {
-    readonly date: string;
-    readonly durationSeconds: number;
-  }[];
-  readonly lastYear: readonly {
-    readonly date: string;
-    readonly durationSeconds: number;
-  }[];
+type MonthData = readonly {
+  readonly month: number;
+  readonly spm: number | undefined;
+}[];
+
+export type RunSpeedChartData = {
+  readonly thisYear: MonthData;
+  readonly lastYear: MonthData;
 };
 
-export default function DurationAccumulationChart({
-  data,
-}: {
-  data: DurationAccumulationChartData;
-}) {
+export default function RunSpeedChart({ data }: { data: RunSpeedChartData }) {
   const {
     fontFamily,
-    colorLastYear,
     colorThisYear,
+    colorLastYear,
     fontSmall,
     fontBase,
-    baseColor,
     tooltipBackground,
+    baseColor,
   } = useChartTheme();
 
   // Only mount on the server as the chart is dependent on the theme which cannot be known on the server
@@ -48,22 +41,15 @@ export default function DurationAccumulationChart({
     return null;
   }
 
-  const thisYear = accumulateDays(data.thisYear);
-  const lastYear = accumulateDays(data.lastYear);
-
-  const maxSeconds = Math.max(
-    ...thisYear.map((d) => d.durationSeconds),
-    ...lastYear.map((d) => d.durationSeconds),
-  );
-  const hourTickValues = hourTicks(maxSeconds);
+  const thisYear = data.thisYear.filter((d) => d.spm != null);
+  const lastYear = data.lastYear.filter((d) => d.spm != null);
 
   return (
     <VictoryChart
-      padding={{ left: 60, bottom: 30, right: 20, top: 30 }}
       containerComponent={
         <VictoryVoronoiContainer
           voronoiDimension="x"
-          labels={({ datum }) => formatDuration(datum.durationSeconds)}
+          labels={({ datum }) => `${formatDuration(datum.spm * 1000)} per km`}
           labelComponent={
             <VictoryTooltip
               cornerRadius={0}
@@ -74,9 +60,11 @@ export default function DurationAccumulationChart({
           mouseFollowTooltips
         />
       }
+      domainPadding={10}
+      padding={{ left: 60, bottom: 30, right: 20, top: 30 }}
     >
       <VictoryLabel
-        text="Accumulated training time"
+        text="Average time to run 1km by month"
         x={230}
         y={10}
         textAnchor="middle"
@@ -84,11 +72,10 @@ export default function DurationAccumulationChart({
       />
       <VictoryAxis
         dependentAxis
-        tickValues={hourTickValues}
-        tickFormat={(y) => formatDuration(y)}
+        tickFormat={(t) => formatDuration(t * 1000)}
         style={{
           tickLabels: {
-            fontFamily,
+            fontFamily: fontFamily,
             fontSize: fontBase,
             fill: baseColor,
           },
@@ -97,8 +84,8 @@ export default function DurationAccumulationChart({
         }}
       />
       <VictoryAxis
-        tickFormat={(x) => dayOfYearToMonth(x)}
-        tickValues={middleOfEachMonth()}
+        tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
+        tickFormat={(m) => monthName(m)}
         style={{
           tickLabels: {
             fontFamily: fontFamily,
@@ -119,8 +106,8 @@ export default function DurationAccumulationChart({
             },
           }}
           data={lastYear}
-          x="dayOfYear"
-          y="durationSeconds"
+          x="month"
+          y="spm"
         />
         <VictoryLine
           style={{
@@ -135,52 +122,16 @@ export default function DurationAccumulationChart({
             },
           }}
           data={thisYear}
-          x="dayOfYear"
-          y="durationSeconds"
+          x="month"
+          y="spm"
         />
       </VictoryGroup>
     </VictoryChart>
   );
 }
 
-function accumulateDays(
-  data: readonly { readonly date: string; readonly durationSeconds: number }[],
-) {
-  return data.reduce<{ dayOfYear: number; durationSeconds: number }[]>(
-    (acc, cur) => {
-      const durationSeconds =
-        acc.length > 0
-          ? acc[acc.length - 1].durationSeconds + cur.durationSeconds
-          : cur.durationSeconds;
-      acc.push({
-        dayOfYear: getDayOfYear(parseISO(cur.date)),
-        durationSeconds,
-      });
-      return acc;
-    },
-    [],
-  );
-}
-
-function hourTicks(maxSeconds: number): number[] {
-  const maxHours = Math.ceil(maxSeconds / 3600);
-  const step = Math.ceil(maxHours / 6);
-  return Array.from(
-    { length: Math.floor(maxHours / step) },
-    (_, i) => (i + 1) * step * 3600,
-  );
-}
-
-function middleOfEachMonth() {
-  const year = new Date().getFullYear();
-  return Array.from({ length: 12 }, (_, i) => {
-    return getDayOfYear(new Date(year, i, 15));
+function monthName(month: number) {
+  return new Date(2000, month - 1).toLocaleString("default", {
+    month: "short",
   });
-}
-
-function dayOfYearToMonth(dayOfYear: number) {
-  const date = new Date();
-  date.setMonth(0);
-  date.setDate(dayOfYear);
-  return date.toLocaleString("default", { month: "short" });
 }

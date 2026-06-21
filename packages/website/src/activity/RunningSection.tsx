@@ -10,6 +10,7 @@ import StripedList, { StripeElement } from "component/StripedList";
 import { formatDuration, formatStartTime, formatKm } from "./format";
 import DistanceBarChart from "./DistanceBarChart";
 import DistanceAccumulationChart from "./DistanceAccumulationChart";
+import RunSpeedChart from "./RunSpeedChart";
 export default function RunningSection() {
   const { activity, loading } = useActivityPage();
 
@@ -70,6 +71,16 @@ export default function RunningSection() {
             ),
             lastYear: (activity?.lastYear.runningWorkouts?.days ?? []).map(
               (d) => ({ date: d.date, km: d.distance?.km ?? 0 }),
+            ),
+          }}
+        />
+        <RunSpeedChart
+          data={{
+            thisYear: (activity?.thisYear.runningWorkouts?.months ?? []).map(
+              ({ month, speed }) => ({ month, spm: speed?.spm }),
+            ),
+            lastYear: (activity?.lastYear.runningWorkouts?.months ?? []).map(
+              ({ month, speed }) => ({ month, spm: speed?.spm }),
             ),
           }}
         />

@@ -143,8 +143,9 @@ export default function DurationBarChart({
 function hourTicks(maxSeconds: number): number[] {
   const maxHours = Math.ceil(maxSeconds / 3600);
   const step = Math.ceil(maxHours / 6);
-  return Array.from({ length: Math.floor(maxHours / step) }, (_, i) =>
-    (i + 1) * step * 3600,
+  return Array.from(
+    { length: Math.floor(maxHours / step) },
+    (_, i) => (i + 1) * step * 3600,
   );
 }
 
