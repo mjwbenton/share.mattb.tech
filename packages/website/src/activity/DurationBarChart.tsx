@@ -74,6 +74,12 @@ export default function DurationBarChart({
       />
       <VictoryAxis
         dependentAxis
+        tickValues={hourTicks(
+          Math.max(
+            ...data.thisYear.map((d) => d.durationSeconds),
+            ...data.lastYear.map((d) => d.durationSeconds),
+          ),
+        )}
         tickFormat={(y) => formatDuration(y)}
         style={{
           tickLabels: {
@@ -131,6 +137,14 @@ export default function DurationBarChart({
         />
       </VictoryGroup>
     </VictoryChart>
+  );
+}
+
+function hourTicks(maxSeconds: number): number[] {
+  const maxHours = Math.ceil(maxSeconds / 3600);
+  const step = Math.ceil(maxHours / 6);
+  return Array.from({ length: Math.floor(maxHours / step) }, (_, i) =>
+    (i + 1) * step * 3600,
   );
 }
 

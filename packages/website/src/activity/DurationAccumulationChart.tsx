@@ -51,6 +51,12 @@ export default function DurationAccumulationChart({
   const thisYear = accumulateDays(data.thisYear);
   const lastYear = accumulateDays(data.lastYear);
 
+  const maxSeconds = Math.max(
+    ...thisYear.map((d) => d.durationSeconds),
+    ...lastYear.map((d) => d.durationSeconds),
+  );
+  const hourTickValues = hourTicks(maxSeconds);
+
   return (
     <VictoryChart
       padding={{ left: 60, bottom: 30, right: 20, top: 30 }}
@@ -78,6 +84,7 @@ export default function DurationAccumulationChart({
       />
       <VictoryAxis
         dependentAxis
+        tickValues={hourTickValues}
         tickFormat={(y) => formatDuration(y)}
         style={{
           tickLabels: {
@@ -152,6 +159,14 @@ function accumulateDays(
       return acc;
     },
     [],
+  );
+}
+
+function hourTicks(maxSeconds: number): number[] {
+  const maxHours = Math.ceil(maxSeconds / 3600);
+  const step = Math.ceil(maxHours / 6);
+  return Array.from({ length: Math.floor(maxHours / step) }, (_, i) =>
+    (i + 1) * step * 3600,
   );
 }
 
