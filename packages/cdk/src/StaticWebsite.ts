@@ -142,6 +142,7 @@ export class StaticWebsite extends cdk.Stack {
         ),
       ],
       distribution,
+      memoryLimit: 1024,
     });
 
     new s3deploy.BucketDeployment(this, "DeployAssets", {
@@ -156,6 +157,7 @@ export class StaticWebsite extends cdk.Stack {
       ],
       distribution,
       prune: false,
+      memoryLimit: 1024,
     });
 
     new route53.ARecord(this, "DomainRecord", {
