@@ -1,7 +1,10 @@
 import gql from "graphql-tag";
 import { DataProvider } from "@mattb.tech/data-fetching";
 import { useQuery } from "@apollo/client";
-import { ActivityPagePart1Query, ActivityPagePart2Query } from "generated/graphql";
+import {
+  ActivityPagePart1Query,
+  ActivityPagePart2Query,
+} from "generated/graphql";
 import { buildActivityVariables } from "./activitySummaryDataProvider";
 
 // The full activity query was previously a single operation, but it grew large
