@@ -49,11 +49,39 @@ export default function MyApp({ Component, pageProps }) {
             <meta name="og:description" content={pageMeta.description} />
           </>
         ) : null}
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+        />
         <meta name="robots" content="noindex, nofollow" />
         <link rel="preconnect" href="https://api.mattb.tech" />
         <link rel="preconnect" href="https://live.staticflickr.com" />
         <link rel="shortcut icon" href="/favicon.ico" />
+        <meta
+          key="theme-color-light"
+          name="theme-color"
+          media="(prefers-color-scheme: light)"
+          content="#ffffff"
+        />
+        <meta
+          key="theme-color-dark"
+          name="theme-color"
+          media="(prefers-color-scheme: dark)"
+          content="#171717"
+        />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        {!isShareMode() ? (
+          <>
+            <link rel="manifest" href="/manifest.webmanifest" />
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <meta name="mobile-web-app-capable" content="yes" />
+            <meta
+              name="apple-mobile-web-app-status-bar-style"
+              content="default"
+            />
+            <meta name="apple-mobile-web-app-title" content="lonesome" />
+          </>
+        ) : null}
       </Head>
       <ThemeProvider attribute="class">
         <NoShareMode>
