@@ -1,6 +1,10 @@
 import detectFrontmatter from "remark-frontmatter";
 import extractFrontmatter from "remark-extract-frontmatter";
 import gfm from "remark-gfm";
+import {
+  remarkDefinitionList,
+  defListHastHandlers,
+} from "remark-definition-list";
 import yaml from "yaml";
 import { plugin as mdxDataFetching } from "@mattb.tech/data-fetching";
 import { plugin as remarkFlickr } from "@mattb.tech/remark-flickr";
@@ -21,10 +25,16 @@ const withMDX = mdx({
         { name: "pageMeta", yaml: yaml.parse, throws: true },
       ],
       gfm,
+      remarkDefinitionList,
       mdxDataFetching,
       [remarkFlickr, { sizes: "100vw" }],
     ],
     rehypePlugins: [rehypePrism],
+    remarkRehypeOptions: {
+      handlers: {
+        ...defListHastHandlers,
+      },
+    },
   },
 });
 
